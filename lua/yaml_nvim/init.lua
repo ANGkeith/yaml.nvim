@@ -97,13 +97,14 @@ M.setup = function(opts)
 	end
 end
 
-M.view = function()
+M.view = function(view_type)
+	view_type = view_type or "human"
 	local node = get_current_yaml_node()
 	if node == nil then
 		return
 	end
 
-	vim.notify(node.human)
+	vim.notify(node[view_type])
 end
 
 M.get_yaml_key_and_value = function()
@@ -165,8 +166,8 @@ end
 
 -- Commands
 
-vim.cmd("command! YAMLView lua require('yaml_nvim').view()")
-vim.cmd("command! -nargs=? YAMLYank lua require('yaml_nvim').yank(<f-args>)")
+vim.cmd("command! -nargs=? YAMLView lua require('yaml_nvim').view(<f-args>)")
+vim.cmd("command! -nargs=? YAMLYank lua require('yaml_nvim').yank_all(<f-args>)")
 vim.cmd("command! -nargs=? YAMLYankKey lua require('yaml_nvim').yank_key(<f-args>)")
 vim.cmd("command! -nargs=? YAMLYankValue lua require('yaml_nvim').yank_value(<f-args>)")
 vim.cmd("command! YAMLQuickfix lua require('yaml_nvim').quickfix()")
